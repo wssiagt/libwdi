@@ -38,7 +38,7 @@ API usage
 
 See: https://github.com/pbatard/libwdi/wiki/Usage
 
-FAQ
+FAQQ
 ---
 
 See: https://github.com/pbatard/libwdi/wiki/FAQ

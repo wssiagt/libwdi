@@ -1,6 +1,7 @@
 name: MinGW
 
 on: 
+  workflow_dispatch:
   push:
     paths-ignore:
       - '.gitignore'
@@ -79,11 +80,11 @@ jobs:
         mkdir -p artifacts/${{ matrix.env }}
         mv examples/*.exe artifacts/${{ matrix.env }}
     - name: Display SHA-256
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
       run: sha256sum artifacts/${{ matrix.env }}/*.exe
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
       with:
         name: ${{ matrix.sys }}
         path: ./artifacts/*/*.exe
@@ -94,7 +95,7 @@ jobs:
     steps:
       - name: Merge Artifacts
         uses: actions/upload-artifact/merge@v4
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
         with:
           name: MinGW
           delete-merged: true
